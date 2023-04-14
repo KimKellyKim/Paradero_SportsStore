@@ -5,5 +5,6 @@ namespace Paradero_SportsStore.Models
     {
         public StoreDbContext(DbContextOptions<StoreDbContext> options): base(options) { }
         public DbSet<Product> Products => Set<Product>();
-    }
+		public DbSet<Order> Orders { get; set; }
+	}
 }

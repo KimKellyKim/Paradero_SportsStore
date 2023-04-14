@@ -2,7 +2,7 @@
 using Paradero_SportsStore.Models;
 using Paradero_SportsStore.Models.ViewModels;
 
-namespace Villanueva_SportsStore.Controllers
+namespace Paradero_SportsStore.Controllers
 {
     public class HomeController : Controller
     {
