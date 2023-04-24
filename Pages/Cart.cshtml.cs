@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Paradero_SportsStore.Models;
 using Paradero_SportsStore.Infrastructure;
-using System.Linq;
+
 namespace Paradero_SportsStore.Pages
 {
 	public class CartModel : PageModel
@@ -13,17 +13,21 @@ namespace Paradero_SportsStore.Pages
 			repository = repo;
 			Cart = cartService;
 		}
-	public Cart Cart { get; set; }
-		public string ReturnUrl { get; set; }
+		public Cart Cart { get; set; }
+		public string ReturnUrl { get; set; } = "/";
 		public void OnGet(string returnUrl)
 		{
 			ReturnUrl = returnUrl ?? "/";
+			//Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
 		}
 		public IActionResult OnPost(long productId, string returnUrl)
 		{
-			Product product = repository.Products
+			Product? product = repository.Products
 			.FirstOrDefault(p => p.ProductID == productId);
-			Cart.AddItem(product, 1);
+			if (product != null)
+			{
+				Cart.AddItem(product, 1);
+			}
 			return RedirectToPage(new { returnUrl = returnUrl });
 		}
 		public IActionResult OnPostRemove(long productId, string returnUrl)
